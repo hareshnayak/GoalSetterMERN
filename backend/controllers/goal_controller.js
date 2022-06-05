@@ -2,19 +2,25 @@ const asyncHandler = require('express-async-handler')
 // use this instead of try catch method to catch errors
 // wrap the functions with it 
 
+const Goal = require('../models/goalModel')
+
+
 
 // @desc Get goals
 // @route GET /api/goals
 // @access Private
-
 const getGoals = asyncHandler( async (req,res) =>{    // async is used coz when mongoose is used to connect db it sends a promise 
-    res.json({"message": "Get Goals"})
+    
+    const goals = await Goal.find()
+    res.status(200).json(goals)
+    // res.json({message: "Get Goals"})    // earlier
 })
+
+
 
 // @desc Set goal
 // @route POST /api/goals
 // @access Private
-
 const setGoals = asyncHandler( async (req, res) =>{ 
 
   // To check if a particular field is entered by user or not
@@ -31,21 +37,50 @@ const setGoals = asyncHandler( async (req, res) =>{
             res.status(400)    // client error 400 is used  
             throw new Error('Please enter a text field')  // this throws error as a HTML page
         }
-    res.json({"message": `Set Goal : ${req.body.text}`})    // wud work even if u use '' or "" or type key without qoutes eg message(wo quotes)
+
+        // if there is no error
+        const goal = await Goal.create({
+            text: req.body.text,
+        })
+        res.json(goal)
+    // res.json({"message": `Set Goal : ${req.body.text}`})    // wud work even if u use '' or "" or type key without qoutes eg message(wo quotes)
 })
 
 // @desc Update goal
 // @route PUT /api/goal/:id
 // @access Private
-
 const updateGoal = asyncHandler( async (req, res) =>{    // Update route requires a param
-    res.json({"message": `Update Goal ${req.params.id}`})   // Use back ticks for adding a variable 
+
+    const goal = await Goal.findById(req.params.id)
+
+    if(!goal){
+        res.status(400)
+        throw new Error('Goal not Found')
+    }
+
+    const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+    })
+
+    res.json(goal)
+    // res.json({"message": `Update Goal ${req.params.id}`})   // Use back ticks for adding a variable 
 })
+
+
 // @desc Delete goal
 // @route DELETE /api/goals/:id
 // @access Private
+const deleteGoal = asyncHandler( async (req, res) =>{   
+    
+    const goal = await Goal.findById(req.params.id)
 
-const deleteGoal = asyncHandler( async (req, res) =>{    
+    if(!goal){
+        res.status(400)
+        throw new Error('Goal not Found')
+    }
+    
+    await goal.remove()
+
     res.json({"message": `Delete Goal ${req.params.id}`}) 
 })
 
