@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
 
 // After Schema adding timestamp to recieve all time related data eg. when set/updated
 {
-    timestamp: true
+    timestamps: true
 })
 
 
