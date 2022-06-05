@@ -13,6 +13,7 @@ app.use(express.urlencoded({extended: false})) // for urlencoded
 
 
 app.use('/api/goals', require('./routes/goal_routes'))
+app.use('/api/users', require('./routes/user_routes'))
 
 app.use(errorHandler) // to override the error handler provided by express
 

@@ -8,6 +8,13 @@ const goalSchema = mongoose.Schema({
     text: {
         type: String,
         required: [true, 'PLease add a text value'] // OR simply required:true
+    },
+
+    // User associated with each goal
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true, 
+        ref: 'User'
     }
 },
 {
