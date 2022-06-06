@@ -1,10 +1,25 @@
+import {BrowserRouter as Router, Routes, Route} from 
+'react-router-dom'
+import Header from './components/Header';
+import Dashboard from './pages/Dashboard';
+import Register from './pages/Register';
+import Login from './pages/Login';
+
 function App() {
   return (
-    <div>
-      <h1>
-        My App Haresh React Redux
-        </h1>     
-    </div>
+    <>  {/*surround code with empty fragment*/}
+    <Router>
+      <div className = 'container'>
+        <Header/>
+       <Routes>
+         <Route path = '/' element={<Dashboard/>} />
+         <Route path = '/login' element={<Login/>} />
+         <Route path = '/register' element={<Register/>} />
+           
+          </Routes> 
+      </div>
+    </Router>
+    </>
   );
 }
 
