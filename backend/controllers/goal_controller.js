@@ -1,8 +1,10 @@
 const asyncHandler = require('express-async-handler')
+const res = require('express/lib/response')
 // use this instead of try catch method to catch errors
 // wrap the functions with it 
 
 const Goal = require('../models/goalModel')
+const User = require('../models/userModel')
 
 
 
@@ -11,7 +13,15 @@ const Goal = require('../models/goalModel')
 // @access Private
 const getGoals = asyncHandler( async (req,res) =>{    // async is used coz when mongoose is used to connect db it sends a promise 
     
-    const goals = await Goal.find()
+    /*
+    // retrieves all the goals in the db
+    const goals = await Goal.find() 
+    */
+
+    // to make it user specific add user in parameter
+    const goals = await Goal.find({user: req.user.id})
+
+
     res.status(200).json(goals)
     // res.json({message: "Get Goals"})    // earlier
 })
@@ -41,10 +51,12 @@ const setGoals = asyncHandler( async (req, res) =>{
         // if there is no error
         const goal = await Goal.create({
             text: req.body.text,
+            user: req.user.id
         })
         res.json(goal)
     // res.json({"message": `Set Goal : ${req.body.text}`})    // wud work even if u use '' or "" or type key without qoutes eg message(wo quotes)
 })
+
 
 // @desc Update goal
 // @route PUT /api/goal/:id
@@ -57,6 +69,24 @@ const updateGoal = asyncHandler( async (req, res) =>{    // Update route require
         res.status(400)
         throw new Error('Goal not Found')
     }
+
+      // Find user user
+      const user = await User.findById(req.user.id)
+
+      // Check for user
+      if(!user){
+          res.status(401)
+          throw new Error("User not found")
+      }
+  
+  
+      // Make sure the log in user matches the goal user
+      if(goal.user.toString() != user.id){
+          res.status(401)
+              throw new Error("User not authorised"
+      )
+      }
+  
 
     const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -78,6 +108,24 @@ const deleteGoal = asyncHandler( async (req, res) =>{
         res.status(400)
         throw new Error('Goal not Found')
     }
+
+      // Find user user
+      const user = await User.findById(req.user.id)
+
+      // Check for user
+      if(!user){
+          res.status(401)
+          throw new Error("User not found")
+      }
+  
+  
+      // Make sure the log in user matches the goal user
+      if(goal.user.toString() != user.id){
+          res.status(401)
+              throw new Error("User not authorised"
+      )
+      }
+  
     
     await goal.remove()
 
