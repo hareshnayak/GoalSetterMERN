@@ -45,7 +45,7 @@ const registerUser = asyncHandler(async (req,res)=>{
     }else{
         res.status(400)
         throw new Error('Invalid user data')
-    }
+    } 
 })
 
 // @desc Authenticate User
@@ -72,11 +72,20 @@ const loginUser = asyncHandler(async (req,res)=>{
 
 // @desc Display User
 // @route GET /api/users/me
-// @access Public
+// @access Private
+// Used as example to protect route ... done with middleware
 const getMe = asyncHandler(async (req,res)=>{
-    res.json({
-        message : "Display user data"
+    // For user to get user info on getMe function
+    const {_id, name, email} = await User.findById(req.user.id)
+
+    res.status(200).json({
+        id: _id,
+        name, 
+        email,   
     })
+    // res.json({
+    //     message : "Display user data"
+    // })
 })
 
 
