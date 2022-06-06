@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'        // importing functions from react
 import {FaSignInAlt} from 'react-icons/fa'
 import {useSelector, useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
