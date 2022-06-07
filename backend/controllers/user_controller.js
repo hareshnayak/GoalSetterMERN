@@ -76,13 +76,7 @@ const loginUser = asyncHandler(async (req,res)=>{
 // Used as example to protect route ... done with middleware
 const getMe = asyncHandler(async (req,res)=>{
     // For user to get user info on getMe function
-    const {_id, name, email} = await User.findById(req.user.id)
-
-    res.status(200).json({
-        id: _id,
-        name, 
-        email,   
-    })
+    res.status(200).json(req.user)
     // res.json({
     //     message : "Display user data"
     // })
