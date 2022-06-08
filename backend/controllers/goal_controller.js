@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler')
-const res = require('express/lib/response')
 // use this instead of try catch method to catch errors
 // wrap the functions with it 
 
@@ -90,7 +89,7 @@ const updateGoal = asyncHandler( async (req, res) =>{    // Update route require
         new: true,
     })
 
-    res.json(goal)
+    res.json(updatedGoal)
     // res.json({"message": `Update Goal ${req.params.id}`})   // Use back ticks for adding a variable 
 })
 
