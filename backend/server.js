@@ -16,11 +16,18 @@ app.use(express.urlencoded({extended: false})) // for urlencoded
 app.use('/api/goals', require('./routes/goal_routes'))
 app.use('/api/users', require('./routes/user_routes'))
 
-//Serve frontend
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(_dirname, '../frontend/build')))
-    app.get('*', (req,res) => res.sendFile(path.resolve(__dirname, '../', 'frontend', 'build', 'index.html' )))
-} 
+// Serve frontend
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/build')))
+  
+    app.get('*', (req, res) =>
+      res.sendFile(
+        path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+      )
+    )
+  } else {
+    app.get('/', (req, res) => res.send('Please set to production'))
+  } 
   
 app.use(errorHandler) // to override the error handler provided by express
 
