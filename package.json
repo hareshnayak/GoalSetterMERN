@@ -4,10 +4,11 @@
   "description": "Goal setter MERN stack application",
   "main": "index.js",
   "scripts": {
-    "start": "node backend/server.js",
+    "start": "node backend/server.js",    
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client \"",
+    "build:azure": "concurrently \"npm run server\" \"npm run client \"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
 
   },
@@ -29,8 +30,3 @@
     "nodemon": "^2.0.16"
   }
 }
- { 
-   "engines" : { 
-     "node" : "10.x" 
-   }
- }
