@@ -5,7 +5,7 @@ import { deleteGoal } from '../features/goals/goalSlice'
 function GoalItem({ goal }) {
 const navigate = useNavigate()
   const dispatch = useDispatch()
-    const onClick = () =>{
+    const onClick = () => {
         dispatch(deleteGoal(goal._id))
         navigate('/login')
     }
