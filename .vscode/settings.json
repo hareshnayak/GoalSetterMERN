@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/92be7859-d7a3-4a89-bf5c-6a314bb41468/microsoft.web/sites/subscriptions/92be7859-d7a3-4a89-bf5c-6a314bb41468/resourceGroups/haresh-myexpress/providers/Microsoft.Web/sites/haresh-myexpress",
+    "appService.deploySubpath": "."
+}
